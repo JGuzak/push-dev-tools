@@ -20,7 +20,7 @@ Options:
                            Default: local
   -h, --help               Show this help.
 
-Run from the push-dev root inside the devcontainer:
+Run from the push-dev-tools root inside the devcontainer:
   ./scripts/build.sh -v local
 
 Environment:
@@ -114,12 +114,12 @@ run_build() {
     rm -rf "${PAYLOAD_DIR}"
     mv "${BUILD_WORK_DIR}/payload" "${PAYLOAD_DIR}"
     mkdir -p "${PACKAGE_DIR}"
-    tar -C "${PAYLOAD_DIR}" -czf "${PACKAGE_DIR}/push-dev-${VERSION}.tar.gz" .
+    tar -C "${PAYLOAD_DIR}" -czf "${PACKAGE_DIR}/push-dev-tools-${VERSION}.tar.gz" .
     (
         cd "${PACKAGE_DIR}"
-        sha256sum "push-dev-${VERSION}.tar.gz" > checksums.txt
+        sha256sum "push-dev-tools-${VERSION}.tar.gz" > checksums.txt
     )
-    info "Package: ${PACKAGE_DIR}/push-dev-${VERSION}.tar.gz"
+    info "Package: ${PACKAGE_DIR}/push-dev-tools-${VERSION}.tar.gz"
     info "Experimental diagnostic module only; no automatic installation or loading."
 }
 

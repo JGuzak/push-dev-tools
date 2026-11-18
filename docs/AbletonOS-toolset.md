@@ -104,13 +104,13 @@ Target context observed during collection:
 
 ### USB And Hardware Inspection
 
-| Tool       | Status              | Version           | Notes                                                           |
-| ---------- | ------------------- | ----------------- | --------------------------------------------------------------- |
-| `lsusb`    | Available           | usbutils 014      | Used to inspect USB IDs and descriptors.                        |
-| `lsusb -t` | Available           | usbutils 014      | Used to inspect USB topology and bound drivers.                 |
-| `lsusb -v` | Available           | usbutils 014      | Used to inspect class-compliant and Overbridge USB descriptors. |
-| `ip`       | Available           | iproute2-5.17.0   | Used for network address inspection.                            |
-| `hostname` | Partially available | GNU coreutils 9.0 | Worked, but `hostname -I` was not supported.                    |
+| Tool       | Status              | Version           | Notes                                            |
+| ---------- | ------------------- | ----------------- | ------------------------------------------------ |
+| `lsusb`    | Available           | usbutils 014      | Used to inspect USB IDs and descriptors.         |
+| `lsusb -t` | Available           | usbutils 014      | Used to inspect USB topology and bound drivers.  |
+| `lsusb -v` | Available           | usbutils 014      | Used to inspect class-compliant USB descriptors. |
+| `ip`       | Available           | iproute2-5.17.0   | Used for network address inspection.             |
+| `hostname` | Partially available | GNU coreutils 9.0 | Worked, but `hostname -I` was not supported.     |
 
 PushDisplayNDI non-invasive libusb probe results:
 
@@ -165,16 +165,16 @@ Project-specific display tap design and planned module features live in
 Observed while checking whether an NDI sender built from the bundled NDI SDK can
 run on Push Standalone.
 
-| Runtime / Library              | Status        | Path / Notes                                                                 |
-| ------------------------------ | ------------- | ---------------------------------------------------------------------------- |
-| Dynamic loader                 | Available     | `/lib/ld-linux-x86-64.so.2`; `/lib64/ld-linux-x86-64.so.2` was not present.   |
-| `libc.so.6`                    | Available     | `/lib/libc.so.6`                                                              |
-| `libgcc_s.so.1`                | Available     | `/lib/libgcc_s.so.1`                                                          |
-| `libstdc++.so.6`               | Available     | `/usr/lib/libstdc++.so.6`                                                     |
-| `libavahi-common.so.3`         | Available     | `/usr/lib/libavahi-common.so.3` and `/usr/lib/libavahi-common.so.3.5.4`       |
-| `libavahi-core.so.7`           | Available     | Reported by `ldconfig -p`                                                     |
-| `libavahi-client.so.3`         | Not found     | Required by NDI SDK `libndi.so.6`; absent from `find /` and `ldconfig -p`.    |
-| `avahi-daemon`                 | Available     | Present in the boot/service inventory; mDNS is used for `push.local`.         |
+| Runtime / Library      | Status    | Path / Notes                                                                |
+| ---------------------- | --------- | --------------------------------------------------------------------------- |
+| Dynamic loader         | Available | `/lib/ld-linux-x86-64.so.2`; `/lib64/ld-linux-x86-64.so.2` was not present. |
+| `libc.so.6`            | Available | `/lib/libc.so.6`                                                            |
+| `libgcc_s.so.1`        | Available | `/lib/libgcc_s.so.1`                                                        |
+| `libstdc++.so.6`       | Available | `/usr/lib/libstdc++.so.6`                                                   |
+| `libavahi-common.so.3` | Available | `/usr/lib/libavahi-common.so.3` and `/usr/lib/libavahi-common.so.3.5.4`     |
+| `libavahi-core.so.7`   | Available | Reported by `ldconfig -p`                                                   |
+| `libavahi-client.so.3` | Not found | Required by NDI SDK `libndi.so.6`; absent from `find /` and `ldconfig -p`.  |
+| `avahi-daemon`         | Available | Present in the boot/service inventory; mDNS is used for `push.local`.       |
 
 NDI SDK `libndi.so.6` has hard ELF `NEEDED` dependencies on
 `libavahi-common.so.3` and `libavahi-client.so.3`. NDI Discovery Server can be
@@ -252,17 +252,17 @@ arecord -l 2>/dev/null
 ### Module Loader Debugging
 
 ```sh
-lsmod | grep snd_pushbridge || true
-dmesg | grep -iE "pushbridge|module|relocation|vermagic|unknown symbol" | tail -120
-modinfo /tmp/some-module.ko
-insmod /tmp/some-module.ko index=1
+lsmod | grep <module name> || true
+dmesg | grep -iE "<module name>|module|relocation|vermagic|unknown symbol" | tail -120
+modinfo /tmp/<module name>.ko
+insmod /tmp/<module name>.ko index=1
 rmmod module_name
 ```
 
 Use the module name for `rmmod`, not the `.ko` filename. For example:
 
 ```sh
-rmmod snd_pushbridge_digitakt
+rmmod <module name>
 ```
 
 ### USB Device Inspection
